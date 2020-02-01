@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FavouriteToys</string>
+    <string name="enter_a_query">Enter a query</string>
+    <string name="yrsearchllshwhr">Your search URL will show up here</string>
+    <string name="pshtsrch">Push to search</string>
+    <string name="search">Search</string>
 </resources>
