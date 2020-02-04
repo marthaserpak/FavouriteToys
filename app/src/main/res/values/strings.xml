@@ -4,4 +4,5 @@
     <string name="yrsearchllshwhr">Your search URL will show up here</string>
     <string name="pshtsrch">Push to search</string>
     <string name="search">Search</string>
+    <string name="error_message">Failed to get results, please try again.</string>
 </resources>
