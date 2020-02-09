@@ -5,8 +5,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GreenAdapter.ListItemClickListener {
 
     private static final int NUM_LIST_ITEMS = 100;
 
@@ -14,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     * "pretty" state when the rest menu items is clicked. */
     private GreenAdapter  mAdapter;
     private RecyclerView mNumberList;
+
+    private Toast mToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +39,21 @@ public class MainActivity extends AppCompatActivity {
         mNumberList.setHasFixedSize(true);
 
         /* The GreenAdapter is responsible for displaying each item in the list. */
-        mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
+        mAdapter = new GreenAdapter(NUM_LIST_ITEMS, this);
 
         mNumberList.setAdapter(mAdapter);
 
     }
 
+    @Override
+    public void onListItemClicked(int clickedItemIndex) {
+        if(mToast != null) {
+            mToast.cancel();
+        }
+        String toastMessage = "Item #" + clickedItemIndex + " clicked!";
+        mToast = Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT);
+        mToast.show();
+    }
 }
 
 
