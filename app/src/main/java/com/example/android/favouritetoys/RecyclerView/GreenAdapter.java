@@ -1,4 +1,4 @@
-package com.example.android.favouritetoys;
+package com.example.android.favouritetoys.RecyclerView;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.android.favouritetoys.R;
 
 public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHolder> {
 

@@ -1,10 +1,12 @@
-package com.example.android.favouritetoys;
+package com.example.android.favouritetoys.RecyclerView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.example.android.favouritetoys.R;
 
 public class ChildActivity extends AppCompatActivity {
 

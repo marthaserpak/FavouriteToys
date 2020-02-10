@@ -1,9 +1,11 @@
-package com.example.android.favouritetoys;
+package com.example.android.favouritetoys.RecyclerView;
 
 import android.content.Context;
 import android.graphics.Color;
 
 import androidx.core.content.ContextCompat;
+
+import com.example.android.favouritetoys.R;
 
 import static android.graphics.Color.*;
 
