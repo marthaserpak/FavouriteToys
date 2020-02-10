@@ -7,12 +7,27 @@
     android:paddingTop="16dp"
     android:paddingRight="16dp">
 
-  <androidx.recyclerview.widget.RecyclerView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:id="@+id/rv_numbers" >
+    <EditText
+        android:id="@+id/et_text_entry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-  </androidx.recyclerview.widget.RecyclerView>
+    <Button
+        android:id="@+id/send_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="@string/send"
+        android:background="#E8F5E9"
+        android:backgroundTintMode="multiply" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_numbers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 </LinearLayout>
