@@ -1,6 +1,7 @@
 package com.example.android.favouritetoys.ImplicitIntents;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ShareCompat;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -52,7 +53,8 @@ public class ImplicitIntents extends AppCompatActivity {
         shareTextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String share = "This String I'd like to share";
+                shareText(share);
             }
         });
 
@@ -99,5 +101,19 @@ public class ImplicitIntents extends AppCompatActivity {
             startActivity(intent);
         }
 
+    }
+
+    public void shareText(String shareText) {
+        String mimeType = "text/plain";
+
+        //Create a title for the chooser window that will pop up
+        String title = "Hey!";
+
+        ShareCompat.IntentBuilder
+                .from(this)
+                .setType(mimeType)
+                .setChooserTitle(title)
+                .setText(shareText)
+                .startChooser();
     }
 }
