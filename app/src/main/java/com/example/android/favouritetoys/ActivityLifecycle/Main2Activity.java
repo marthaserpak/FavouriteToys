@@ -1,8 +1,10 @@
 package com.example.android.favouritetoys.ActivityLifecycle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ public class Main2Activity extends AppCompatActivity {
     private static final String ON_DESTROY = "onDestroy";
     private static final String ON_SAVE_INSTANCE_STATE = "onSaveInstanceState";
 
+    private static final String LIFECYCLE_CALLBACKS_TEXT_KEY = "callbacks";
     /* This TextView will contain a running log of every lifecycle callback
      * method called from this Activity. This TextView can be reset
      * to its default state by clicking the Button labeled "Reset Log" */
@@ -41,12 +44,20 @@ public class Main2Activity extends AppCompatActivity {
 
         mLifecycleDisplay = findViewById(R.id.tv_lifecycle_events_display);
 
+        if(savedInstanceState != null) {
+            if(savedInstanceState.containsKey(LIFECYCLE_CALLBACKS_TEXT_KEY)) {
+                String allPreviousLifecycleCallbacks = savedInstanceState
+                        .getString(LIFECYCLE_CALLBACKS_TEXT_KEY);
+                mLifecycleDisplay.setText(allPreviousLifecycleCallbacks);
+            }
+        }
+
         logAndAppend(ON_CREATE);
     }
 
     /**
      * Called when the activity is becoming visible to the user.
-     *
+     * <p>
      * Followed by onResume() if the activity comes to the foreground, or onStop() if it becomes
      * hidden.
      */
@@ -61,7 +72,7 @@ public class Main2Activity extends AppCompatActivity {
      * Called when the activity will start interacting with the user.
      * At this point your activity is at the top of the activity stack,
      * with user input going to it.
-     *
+     * <p>
      * Always followed by onPause().
      */
     @Override
@@ -77,7 +88,7 @@ public class Main2Activity extends AppCompatActivity {
      * stop animations and other things that may be consuming CPU, etc.
      * Implementations of this method must be very quick because the next
      * activity will not be resumed until this method returns.
-     *
+     * <p>
      * Followed by either onResume() if the activity returns back to the front, or onStop() if it
      * becomes invisible to the user.
      */
@@ -94,7 +105,7 @@ public class Main2Activity extends AppCompatActivity {
      * This may happen either because a new activity is being
      * started, an existing one is being brought in front of this one,
      * or this one is being destroyed.
-     *
+     * <p>
      * Followed by either onRestart() if this activity is coming back to interact with the user, or
      * onDestroy() if this activity is going away.
      */
@@ -107,7 +118,7 @@ public class Main2Activity extends AppCompatActivity {
 
     /**
      * Called after your activity has been stopped, prior to it being started again.
-     *
+     * <p>
      * Always followed by onStart()
      */
     @Override
@@ -132,10 +143,21 @@ public class Main2Activity extends AppCompatActivity {
         logAndAppend(ON_DESTROY);
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        logAndAppend(ON_SAVE_INSTANCE_STATE);
+        String lifececleDisplayTextViewContents = mLifecycleDisplay
+                .getText().toString();
+        outState.putString(LIFECYCLE_CALLBACKS_TEXT_KEY,
+                lifececleDisplayTextViewContents);
+    }
+
     /**
      * Logs to the console and appends the lifecycle method name to the TextView
      * so that you can view the series of method callbacks that are called both
      * from the app and from within Android Studio's Logcat.
+     *
      * @param lifecycleEvent The name of the event to be logged.
      */
     private void logAndAppend(String lifecycleEvent) {
