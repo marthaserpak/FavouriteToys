@@ -20,13 +20,6 @@
         </activity>
         <activity android:name=".ExplicitIntents.ExplicitIntents" />
         <activity android:name=".ImplicitIntents.ImplicitIntents" />
-
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-
         <activity android:name=".RecyclerView.ChildActivity" />
         <activity android:name=".RecyclerView.MainActivity" />
     </application>

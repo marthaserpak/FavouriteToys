@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.example.android.favouritetoys.R;
 
+import java.util.ArrayList;
+
 public class Main2Activity extends AppCompatActivity {
 
     /**
@@ -37,6 +39,8 @@ public class Main2Activity extends AppCompatActivity {
      * to its default state by clicking the Button labeled "Reset Log" */
     private TextView mLifecycleDisplay;
 
+    private static ArrayList<String> mLifecycleCallbacks = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,13 +48,33 @@ public class Main2Activity extends AppCompatActivity {
 
         mLifecycleDisplay = findViewById(R.id.tv_lifecycle_events_display);
 
-        if(savedInstanceState != null) {
-            if(savedInstanceState.containsKey(LIFECYCLE_CALLBACKS_TEXT_KEY)) {
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(LIFECYCLE_CALLBACKS_TEXT_KEY)) {
                 String allPreviousLifecycleCallbacks = savedInstanceState
                         .getString(LIFECYCLE_CALLBACKS_TEXT_KEY);
                 mLifecycleDisplay.setText(allPreviousLifecycleCallbacks);
             }
         }
+
+        /* The reason we iterate(повторять) starting from the back of the
+         * A.List and ending in the front is that the most recent callbacks
+         * are inserted(вставлены) into the front of the ArrayList, so
+         * naturally the older callbacks are stored further back.
+         * We could have used a Queue to do this, but Java has strange API
+         * names for the Queue interface that we thought might be
+         * more confusing than this ArrayList solution.
+         */
+        for (int i = mLifecycleCallbacks.size() - 1; i >= 0; i--) {
+            mLifecycleDisplay.append(mLifecycleCallbacks.get(i)
+                    + "\n");
+        }
+
+        /*
+         * Once we've appended each callback from the ArrayList to the
+         *  TextView, we need to clean the ArrayList so we
+         * don't get duplicate entries in the TextView.
+         */
+        mLifecycleCallbacks.clear();
 
         logAndAppend(ON_CREATE);
     }
@@ -113,6 +137,14 @@ public class Main2Activity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
+        /*
+         * Since any updates to the UI we make after onSaveInstanceState
+         *  (onStop, onDestroy, etc), we use an ArrayList to track if
+         *  these lifecycle events had occurred. If any of them have
+         * occurred(произошло), we append their respective name to the TextView.
+         */
+        mLifecycleCallbacks.add(0, ON_STOP);
+
         logAndAppend(ON_STOP);
     }
 
@@ -139,6 +171,8 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        mLifecycleCallbacks.add(0, ON_DESTROY);
 
         logAndAppend(ON_DESTROY);
     }
