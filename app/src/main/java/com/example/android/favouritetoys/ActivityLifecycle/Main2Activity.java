@@ -34,6 +34,7 @@ public class Main2Activity extends AppCompatActivity {
     private static final String ON_SAVE_INSTANCE_STATE = "onSaveInstanceState";
 
     private static final String LIFECYCLE_CALLBACKS_TEXT_KEY = "callbacks";
+
     /* This TextView will contain a running log of every lifecycle callback
      * method called from this Activity. This TextView can be reset
      * to its default state by clicking the Button labeled "Reset Log" */
