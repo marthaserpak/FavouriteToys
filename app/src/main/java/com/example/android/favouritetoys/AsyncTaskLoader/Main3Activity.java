@@ -1,10 +1,12 @@
 package com.example.android.favouritetoys.AsyncTaskLoader;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +21,11 @@ import java.io.IOException;
 import java.net.URL;
 
 public class Main3Activity extends AppCompatActivity {
+    //String to store query's url
+    public static final String QUERY_URL = "queryUrl";
+    //Key to store search's raw JSON
+    public static final String RAW_JSON = "rawJSON";
+
 
     private EditText mSearchBox;
 
@@ -41,6 +48,16 @@ public class Main3Activity extends AppCompatActivity {
         mErrorMessage = findViewById(R.id.tv_error_message_display);
         mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
 
+        //If the savedInstanceState bundle is not null, set
+        // the text of the URL and search results TextView respectively
+        if(savedInstanceState != null) {
+            String queryUrl = savedInstanceState.getString(QUERY_URL);
+            String rawJsonSearchResults = savedInstanceState
+                    .getString(RAW_JSON);
+
+            mUrlDisplay.setText(queryUrl);
+            mSearchResults.setText(rawJsonSearchResults);
+        }
     }
 
     private void makeGithubSearchQuery() {
@@ -126,4 +143,23 @@ public class Main3Activity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /* Override onSaveInstanceState to persist data
+     across Activity recreation (для сохранения данных при
+     обновлении).*/
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        //Put the contents of the TextView that contains our URL into a variable
+        String queryUrl = mUrlDisplay.getText().toString();
+        // Using the key for the query URL,
+        // put the string in the outState Bundle
+        outState.putString(QUERY_URL, queryUrl);
+
+        //Put the contents of the TextView that contains our raw JSON search results into a variable
+        String rawJsonSearchResults = mSearchResults.getText().toString();
+
+        //Using the key for the raw JSON search results,
+        // put the search results into the outState Bundle
+        outState.putString(RAW_JSON, rawJsonSearchResults);
+    }
 }
