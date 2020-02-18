@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.android.favouritetoys">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Vizualizer.VizualizerActivity">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name="$Visualizer.VisualizerActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AsyncTaskLoader.Main3Activity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity
+            android:name="$Visualizer.SettingsActivity"
+            android:label="@string/settings"
+            android:parentActivityName="$Visualizer.VisualizerActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Visualizer.VisualizerActivity" />
+
         </activity>
-        <activity android:name=".ActivityLifecycle.Main2Activity" />
-        <activity android:name=".ExplicitIntents.ExplicitIntents" />
-        <activity android:name=".ImplicitIntents.ImplicitIntents" />
-        <activity android:name=".RecyclerView.ChildActivity" />
-        <activity android:name=".RecyclerView.MainActivity" />
+
+        <activity android:name="$AsyncTaskLoader.Main3Activity" />
+        <activity android:name="$ActivityLifecycle.Main2Activity" />
+        <activity android:name="$ExplicitIntents.ExplicitIntents" />
+        <activity android:name="$ImplicitIntents.ImplicitIntents" />
+        <activity android:name="$RecyclerView.ChildActivity" />
+        <activity android:name="$RecyclerView.MainActivity" />
     </application>
-
 </manifest>

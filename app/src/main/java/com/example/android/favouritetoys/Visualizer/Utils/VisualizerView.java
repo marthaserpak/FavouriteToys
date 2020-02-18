@@ -1,4 +1,4 @@
-package com.example.android.favouritetoys.Vizualizer.Utils;
+package com.example.android.favouritetoys.Visualizer.Utils;
 
 import android.content.Context;
 import android.graphics.Canvas;
