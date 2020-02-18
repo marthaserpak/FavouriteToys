@@ -11,6 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Vizualizer.VizualizerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".AsyncTaskLoader.Main3Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityLifecycle.Main2Activity"/>
+        <activity android:name=".ActivityLifecycle.Main2Activity" />
         <activity android:name=".ExplicitIntents.ExplicitIntents" />
         <activity android:name=".ImplicitIntents.ImplicitIntents" />
         <activity android:name=".RecyclerView.ChildActivity" />

@@ -7,4 +7,13 @@
     <string name="error_message">Failed to get results, please try again.</string>
     <string name="defaultText">This is default text. Hopefully it changes.</string>
     <string name="send">Send</string>
+
+    <!-- Value in SharedPreferences for red color option -->
+    <string name="pref_color_red_value" translatable="false">red</string>
+
+    <!-- Value in SharedPreferences for blue color option -->
+    <string name="pref_color_blue_value" translatable="false">blue</string>
+
+    <!-- Value in SharedPreferences for green color option -->
+    <string name="pref_color_green_value" translatable="false">green</string>
 </resources>
