@@ -12,7 +12,7 @@ import com.example.android.favouritetoys.R;
  * the {@link MediaPlayer} and {@link Visualizer}
  */
 
-class AudioInputReader {
+public class AudioInputReader {
 
     private final VisualizerView mVisualizerView;
     private final Context mContext;
@@ -30,7 +30,7 @@ class AudioInputReader {
         mPlayer = MediaPlayer.create(mContext, R.raw.htmlthesong);
         mPlayer.setLooping(true);
 
-        //Setup the vizualizer
+        //Setup the visualizer
         //Connect it to the media player
         mVisualizer = new Visualizer(mPlayer.getAudioSessionId());
 
