@@ -64,6 +64,7 @@ public class AudioInputReader {
         mVisualizer.setEnabled(true);
         mPlayer.start();
     }
+
     public void shutdown(boolean isFinishing) {
 
         if (mPlayer != null) {
