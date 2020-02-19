@@ -3,9 +3,11 @@ package com.example.android.favouritetoys.Visualizer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,8 +20,6 @@ import com.example.android.favouritetoys.R;
 import com.example.android.favouritetoys.Visualizer.Utils.AudioInputReader;
 import com.example.android.favouritetoys.Visualizer.Utils.VisualizerView;
 
-import java.util.zip.Inflater;
-
 public class VisualizerActivity extends AppCompatActivity {
 
     private static final int MY_PERMISSION_RECORD_AUDIO_REQUEST_CODE = 88;
@@ -31,11 +31,19 @@ public class VisualizerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizer);
         mVisualizerView = findViewById(R.id.activity_visualizer);
-        defaultSetup();
+        setupSharedPreferences();
         setupPermissions();
     }
 
-    private void defaultSetup() {
+    private void setupSharedPreferences() {
+
+        SharedPreferences preferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        /*Get a reference to the default shared preferences
+         from the PreferenceManager class*/
+        mVisualizerView.setShowBass(preferences.getBoolean("show_bass", true));
+
+
         mVisualizerView.setShowBass(true);
         mVisualizerView.setShowMid(true);
         mVisualizerView.setShowTreble(true);
@@ -54,7 +62,7 @@ public class VisualizerActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.action_settings) {
+        if (id == R.id.action_settings) {
             Intent startSettingsActivity =
                     new Intent(this, SettingsActivity.class);
             startActivity(startSettingsActivity);
@@ -105,7 +113,7 @@ public class VisualizerActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[],
+                                           @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSION_RECORD_AUDIO_REQUEST_CODE: {
