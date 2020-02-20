@@ -1,4 +1,4 @@
-package com.example.android.favouritetoys.Visualizer.Utils;
+package com.example.android.favouritetoys.Visualizer.AudioVisuals;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -13,28 +13,31 @@ import androidx.core.content.ContextCompat;
 
 import com.example.android.favouritetoys.R;
 
+//VisualizerView is responsible for setting up and drawing the visualization
+//of the music.
 public class VisualizerView extends View {
 
-    // These constants determine(определяет) how much of a percentage(какой процент)
-    // of the audio frequencies(аудио частот) each shape represents(представляет
-    // каждая форма).
-    // For example, the bass circle represents the bottom 10% of the frequencies.
+    /* These constants determine(определяют) how much of
+     * a percentage of the audio frequencies (какой процент от звуковых частот)
+     *  each shape represents (каждая форма представляет).
+     * For example, bass circle represents the bottom 10% of the frequencies.*/
     private static final float SEGMENT_SIZE = 100.f;
     private static final float BASS_SEGMENT_SIZE = 10.f / SEGMENT_SIZE;
     private static final float MID_SEGMENT_SIZE = 30.f / SEGMENT_SIZE;
     private static final float TREBLE_SEGMENT_SIZE = 60.f / SEGMENT_SIZE;
 
-    //The minimum size of the shape, by default, before scaling
+    //The minimum size of the shape(форма), by default,
+    // before scaling(до масштабирования)
     private static final float MIN_SIZE_DEFAULT = 50;
 
-    //This multiplier is used to make the frequency jumps a little more visually pronounced
+    // This multiplier is used to make the frequency jumps a little more visually pronounced
     private static final float BASS_MULTIPLIER = 1.5f;
     private static final float MID_MULTIPLIER = 3;
     private static final float TREBLE_MULTIPLIER = 5;
 
-    private static final float REVOLUTIONS_PER_SECOND = 3.f;
+    private static final float REVOLUTIONS_PER_SECOND = .3f;
 
-    //Controls the Size of the circle each shape makes
+    //Controls the size of the circle each shape makes
     private static final float RADIUS_BASS = 20 / 100.f;
     private static final float RADIUS_MID = 60 / 100.f;
     private static final float RADIUS_TREBLE = 90 / 100.f;
@@ -44,19 +47,20 @@ public class VisualizerView extends View {
     private final TrailedShape mMidSquare;
     private final TrailedShape mTrebleTriangle;
 
-    //The array which keeps the current fft types
+    // The array which keeps the current fft bytes
     private byte[] mBytes;
 
     //The time when the animation started
     private long mStartTime;
 
-    //Numbers representing the current average of all the values in the bass,
-    //mid and treble range
+    //Numbers representing the current average of all values in the bass,
+    //mid and treble range(диапазон высоких частот)
+    //in the fft
     private float bass;
     private float mid;
     private float treble;
 
-    //Determines whether which of these should be shown
+    //Determines whether each of these should be shown
     private boolean showBass;
     private boolean showMid;
     private boolean showTreble;
@@ -68,21 +72,25 @@ public class VisualizerView extends View {
         super(context, attrs);
         mBytes = null;
         TrailedShape.setMinSize(MIN_SIZE_DEFAULT);
-        // Create each of the shapes and define how they are drawn on screen
-        // Make bass circle
+
+        /* Create each of the shape and define hoe they are drawn on screen
+         * Make bass circle.*/
         mBassCircle = new TrailedShape(BASS_MULTIPLIER) {
             @Override
             protected void drawThisShape(float shapeCenterX, float shapeCenterY,
-                                         float currentSize, Canvas canvas, Paint paint) {
+                                         float currentSize, Canvas canvas,
+                                         Paint paint) {
                 canvas.drawCircle(shapeCenterX, shapeCenterY, currentSize, paint);
             }
         };
 
-        // Make midrange square
+        //Make mid range(средний диапазон) square
         mMidSquare = new TrailedShape(MID_MULTIPLIER) {
             @Override
-            protected void drawThisShape(float shapeCenterX, float shapeCenterY,
-                                         float currentSize, Canvas canvas, Paint paint) {
+            protected void drawThisShape(float shapeCenterX,
+                                         float shapeCenterY,
+                                         float currentSize,
+                                         Canvas canvas, Paint paint) {
                 canvas.drawRect(shapeCenterX - currentSize,
                         shapeCenterY - currentSize,
                         shapeCenterX + currentSize,
@@ -91,27 +99,29 @@ public class VisualizerView extends View {
             }
         };
 
-        // Make treble triangle
         mTrebleTriangle = new TrailedShape(TREBLE_MULTIPLIER) {
             @Override
-            protected void drawThisShape(float shapeCenterX, float shapeCenterY, float currentSize, Canvas canvas, Paint paint) {
+            protected void drawThisShape(float shapeCenterX,
+                                         float shapeCenterY,
+                                         float currentSize,
+                                         Canvas canvas, Paint paint) {
                 Path trianglePath = new Path();
                 trianglePath.moveTo(shapeCenterX, shapeCenterY - currentSize);
-                trianglePath.lineTo(shapeCenterX + currentSize, shapeCenterY + currentSize / 2);
-                trianglePath.lineTo(shapeCenterX - currentSize, shapeCenterY + currentSize / 2);
-                trianglePath.lineTo(shapeCenterX, shapeCenterY - currentSize);
+                trianglePath.lineTo(shapeCenterX + currentSize,
+                        shapeCenterY + currentSize / 2);
+                trianglePath.lineTo(shapeCenterX, shapeCenterY - currentSize / 2);
                 canvas.drawPath(trianglePath, paint);
             }
         };
-
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-
-        // Setup all the view measurement code after the view is laid out. If this is done any
-        // earlier the height and width are not yet determined
+        //Setup all the view measurement(измерение) code
+        // after the view is laid out(выложен).
+        // If this is done any earlier the height
+        //and width are not yet determined.
         mStartTime = SystemClock.uptimeMillis();
 
         float viewCenterX = getWidth() / 2.f;
@@ -132,13 +142,13 @@ public class VisualizerView extends View {
             return;
         }
 
-        // Get the current angle all of the shapes are at
+        //Get the current angle(угол) all of the shapes are at
         double currentAngleRadians = calcCurrentAngle();
 
-        // Draw the background
+        //Draw the background
         canvas.drawColor(backgroundColor);
 
-        // Draw each shape
+        //Draw each shape
         if (showBass) {
             mBassCircle.draw(canvas, bass, currentAngleRadians);
         }
@@ -149,31 +159,29 @@ public class VisualizerView extends View {
             mTrebleTriangle.draw(canvas, treble, currentAngleRadians);
         }
 
-        // Invalidate the view to immediately redraw
+        //Invalidate the view to immediately redraw
         invalidate();
     }
 
-    /**
-     * Calculates, based on the current time, the angle all of the shapes should be at
+    /* Calculates based on the current time, the angle all of the shapes
+     * should be at
      *
-     * @return The current angle, in radians, that all shapes should be at
-     */
+     * @return The current angle, in radians, that all shapes should be at. */
     private double calcCurrentAngle() {
         long elapsedTime = SystemClock.uptimeMillis() - mStartTime;
         float revolutions = elapsedTime * REVOLUTIONS_PER_SECOND / 1000;
         return revolutions * 2 * Math.PI;
     }
 
-    /**
-     * This method is called by the {@link AudioInputReader} class to pass in the current fast
-     * Fourier transform bytes. The array is then taken, divided up into segments, and each segment
+    /* This method is called by the {@link AudioInputReader}
+     * class to pass in the current fast Fourier transform bytes.
+     * The array is then taken, divided up into segments, and each segment
      * is averaged to determine how big of a visual spike to display.
-     * <p>
-     * For more information on fast fourier transforms, check out this website:
-     * http://cmc.music.columbia.edu/musicandcomputers/chapter3/03_04.php
-     *
-     * @param bytes
-     */
+      <p>
+      For more information on fast fourier transforms, check out this website:
+      http://cmc.music.columbia.edu/musicandcomputers/chapter3/03_04.php
+
+      @param bytes */
     public void updateFFT(byte[] bytes) {
         mBytes = bytes;
 
@@ -201,16 +209,14 @@ public class VisualizerView extends View {
         invalidate();
     }
 
-    /**
-     * Restarts the visualization
-     */
+    //Restarts the visualization
     public void restart() {
         mBassCircle.restartTrail();
         mMidSquare.restartTrail();
         mTrebleTriangle.restartTrail();
     }
 
-    /** The methods below can be called to change the visualization **/
+    /* The methods below can be called to change the visualization **/
 
     /**
      * Sets the visibility of the bass circle
@@ -240,7 +246,7 @@ public class VisualizerView extends View {
     }
 
     /**
-     * Sets the scale for the minimum size of the shape
+     * Sets the scale(масштаб) for the minimum size of the shape
      *
      * @param scale the scale for the size of the shape
      */
@@ -284,6 +290,4 @@ public class VisualizerView extends View {
         mTrebleTriangle.setTrailColor(trailColor);
     }
 }
-
-
 

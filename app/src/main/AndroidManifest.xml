@@ -4,6 +4,7 @@
     package="com.example.android.favouritetoys">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="false"
@@ -13,26 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity
-            android:name=".Visualizer.VisualizerActivity"
-            android:launchMode="singleTop">
+        <activity android:name=".Visualizer.VisualizerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name="$Visualizer.SettingsActivity"
-            android:label="@string/settings"
-            android:parentActivityName="$Visualizer.VisualizerActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Visualizer.VisualizerActivity" />
-
-        </activity>
-
         <activity android:name="$AsyncTaskLoader.Main3Activity" />
         <activity android:name="$ActivityLifecycle.Main2Activity" />
         <activity android:name="$ExplicitIntents.ExplicitIntents" />
@@ -40,4 +28,5 @@
         <activity android:name="$RecyclerView.ChildActivity" />
         <activity android:name="$RecyclerView.MainActivity" />
     </application>
+
 </manifest>

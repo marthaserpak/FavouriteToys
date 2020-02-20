@@ -8,23 +8,4 @@
     <string name="defaultText">This is default text. Hopefully it changes.</string>
     <string name="send">Send</string>
 
-    <!-- Value in SharedPreferences for red color option -->
-    <string name="pref_color_red_value" translatable="false">red</string>
-
-    <!-- Value in SharedPreferences for blue color option -->
-    <string name="pref_color_blue_value" translatable="false">blue</string>
-
-    <!-- Value in SharedPreferences for green color option -->
-    <string name="pref_color_green_value" translatable="false">green</string>
-
-    <string name="settings">Settings</string>
-
-    <!-- label for the show_bass check box -->
-    <string name="pref_show_bass_label">Show Bass</string>
-    <string name="pref_show_bass_key" translatable="false">show_bass</string>
-
-    <!-- Summary for checkboxes -->
-    <string name="pref_show_true">Shown</string>
-    <string name="pref_show_false">Hidden</string>
-
 </resources>

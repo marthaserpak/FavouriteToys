@@ -1,4 +1,4 @@
-package com.example.android.favouritetoys.Visualizer.Utils;
+package com.example.android.favouritetoys.Visualizer.AudioVisuals;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -9,20 +9,19 @@ import androidx.annotation.ColorInt;
 import java.util.LinkedList;
 import java.util.Objects;
 
-/**
- * Abstract class representing a shape(форма) and
- * a trail(след) for where it's been */
+//Abstract class representing a shape and a trail for where it's been
+//(Абстрактный класс представляет форму и вид где происходила визуализация)
 abstract class TrailedShape {
 
-    // Static variables for the center of the parent view
-    // and the minimum size of all of the shapes
+    //Static variables for the center of the parent view and the minimum
+    //size of all of the shapes
     private static float sViewCenterX, sViewCenterY;
     private static float sMinSize;
 
     // Variables for determining size
     private final float mMultiplier;
 
-    // Variables for determining trail
+    //Variables for determining trail
     private final Path mTrailPath;
     private final LinkedList<TrailPoint> mTrailList;
 
@@ -67,7 +66,7 @@ abstract class TrailedShape {
     /**
      * This draw method abstracts out what is common between drawing all shapes
      *
-     * @param canvas         The canvas(холст) to draw on
+     * @param canvas         The canvas to draw on
      * @param currentFreqAve The average frequency for the same, which determines the boost in size
      * @param currentAngle   The current angle around the center to draw the shape
      */
@@ -92,8 +91,7 @@ abstract class TrailedShape {
         }
 
         // Draw the trail
-        mTrailPath.moveTo(Objects.requireNonNull(mTrailList.peekFirst()).x,
-                Objects.requireNonNull(mTrailList.peekFirst()).y);
+        mTrailPath.moveTo(Objects.requireNonNull(mTrailList.peekFirst()).x, Objects.requireNonNull(mTrailList.peekFirst()).y);
         for (TrailPoint trailPoint : mTrailList) {
             mTrailPath.lineTo(trailPoint.x, trailPoint.y);
         }
@@ -113,7 +111,10 @@ abstract class TrailedShape {
      * @param canvas       The canvas to draw on
      * @param paint        The paint to draw with
      */
-    abstract void drawThisShape(float shapeCenterX, float shapeCenterY, float currentSize, Canvas canvas, Paint paint);
+    protected abstract void drawThisShape(float shapeCenterX,
+                                          float shapeCenterY,
+                                          float currentSize,
+                                          Canvas canvas, Paint paint);
 
     /**
      * Clears the trail
@@ -127,7 +128,6 @@ abstract class TrailedShape {
      *
      * @param radiusFromCenter    The distance from the center of this shape
      * @param currentAngleRadians The current angle of the shape
-
      */
     private float calcLocationInAnimationX(float radiusFromCenter, double currentAngleRadians) {
         return (float) (sViewCenterX + Math.cos(currentAngleRadians) * radiusFromCenter);
@@ -139,7 +139,6 @@ abstract class TrailedShape {
      *
      * @param radiusFromCenter    The distance from the center of this shape
      * @param currentAngleRadians The current angle of the shape
-     * @return
      */
     private float calcLocationInAnimationY(float radiusFromCenter, double currentAngleRadians) {
         return (float) (sViewCenterY + Math.sin(currentAngleRadians) * radiusFromCenter);
