@@ -41,7 +41,9 @@ public class VisualizerActivity extends AppCompatActivity {
                 .getDefaultSharedPreferences(this);
         /*Get a reference to the default shared preferences
          from the PreferenceManager class*/
-        mVisualizerView.setShowBass(preferences.getBoolean("show_bass", true));
+        mVisualizerView.setShowBass(preferences.getBoolean(
+                getString(R.string.pref_show_bass_key),
+                getResources().getBoolean(R.bool.pref_show_bass_default)));
 
 
         mVisualizerView.setShowBass(true);
