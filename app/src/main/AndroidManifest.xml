@@ -14,7 +14,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Visualizer.VisualizerActivity">
+        <activity
+            android:name="$Visualizer.SettingsActivity"
+            android:label="@string/action_settings"
+            android:parentActivityName=".Visualizer.VisualizerActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Visualizer.VisualizerActivity"/>
+        </activity>
+
+        <activity android:name="$Visualizer.VisualizerActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

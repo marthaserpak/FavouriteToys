@@ -28,7 +28,7 @@ public class VisualizerView extends View {
 
     //The minimum size of the shape(форма), by default,
     // before scaling(до масштабирования)
-    private static final float MIN_SIZE_DEFAULT = 50;
+    private static final float MIN_SIZE_DEFAULT = 30;
 
     // This multiplier is used to make the frequency jumps a little more visually pronounced
     private static final float BASS_MULTIPLIER = 1.5f;
