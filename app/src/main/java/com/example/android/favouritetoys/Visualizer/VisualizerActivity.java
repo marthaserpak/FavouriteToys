@@ -3,9 +3,11 @@ package com.example.android.favouritetoys.Visualizer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,12 +32,21 @@ public class VisualizerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizer2);
         mVisualizerView = findViewById(R.id.activity_visualizer2);
-        defaultSetup();
+        setupSharedPreferences();
         setupPermissions();
     }
 
-    private void defaultSetup() {
-        mVisualizerView.setShowBass(true);
+    private void setupSharedPreferences() {
+
+        //Get a reference to the default shared preferences
+        // from the PreferenceManager class
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+        //get value of the show bass check box preference and use it to call setShowBass
+        mVisualizerView.setShowBass(sharedPreferences.getBoolean(
+                getString(R.string.pref_show_bass_key),
+                 getResources().getBoolean(R.bool.press_show_bass_default)));
         mVisualizerView.setShowMid(true);
         mVisualizerView.setShowTreble(true);
         mVisualizerView.setMinSizeScale(1);
@@ -76,7 +87,7 @@ public class VisualizerActivity extends AppCompatActivity {
             // And if we're on SDK M or later...
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 // Ask again, nicely, for the permissions.
-                String[] permissionsWeNeed = new String[]{ Manifest.permission.RECORD_AUDIO };
+                String[] permissionsWeNeed = new String[]{Manifest.permission.RECORD_AUDIO};
                 requestPermissions(permissionsWeNeed, MY_PERMISSION_RECORD_AUDIO_REQUEST_CODE);
             }
         } else {
@@ -111,7 +122,7 @@ public class VisualizerActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.visualizer_menu,menu);
+        inflater.inflate(R.menu.visualizer_menu, menu);
         return true;
     }
 
