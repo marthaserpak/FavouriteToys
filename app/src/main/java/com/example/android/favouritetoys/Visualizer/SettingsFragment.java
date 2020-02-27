@@ -26,5 +26,5 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             Preference p = preferenceScreen.getPreference(i);
         }
 
-    } 
+    }
 }
