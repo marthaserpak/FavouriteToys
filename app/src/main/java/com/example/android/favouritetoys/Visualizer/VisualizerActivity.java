@@ -21,7 +21,7 @@ import com.example.android.favouritetoys.Visualizer.AudioVisuals.AudioInputReade
 import com.example.android.favouritetoys.Visualizer.AudioVisuals.VisualizerView;
 
 public class VisualizerActivity extends AppCompatActivity implements
-        SharedPreferences.OnSharedPreferenceChangeListener {
+        SharedPreferences.OnSharedPreferenceChangeListener  {
 
     private static final int MY_PERMISSION_RECORD_AUDIO_REQUEST_CODE = 88;
     private VisualizerView mVisualizerView;
